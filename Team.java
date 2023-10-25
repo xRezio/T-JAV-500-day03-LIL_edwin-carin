@@ -47,11 +47,11 @@ public class Team {
             if (astronaut.getDestination() != null) {
                 builder.append("on mission");
             } else {
-                builder.append("on standby");
+                builder.append("on standby.");
             }
             builder.append(", ");
         }
-        builder.setLength(builder.length() - 2);  // Remove the last ", "
+        builder.setLength(builder.length() - 2);
         System.out.println(builder);
     }
 }

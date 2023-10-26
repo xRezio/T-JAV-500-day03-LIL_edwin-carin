@@ -1,57 +1,75 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class Team {
-    private final String name;
-    private final List<Astronaut> members = new ArrayList<>();
 
-    public void doActions(Object... actions) {
-        if (actions == null || actions.length == 0) {
-            System.out.println(name + ": Nothing to do.");
-        } else {
-            for (Object action : actions) {
-                for (Astronaut astronaut : members) {
-                    astronaut.doActions(action);
-                }
-            }
-        }
-    }
+    private String name;
+    ArrayList<Astronaut> astronauts;
 
     public Team(String name) {
         this.name = name;
+        this.astronauts = new ArrayList<Astronaut>();
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void add(Astronaut astronaut) {
-        members.add(astronaut);
+        this.astronauts.add(astronaut);
     }
 
     public void remove(Astronaut astronaut) {
-        members.remove(astronaut);
+        this.astronauts.remove(astronaut);
     }
 
     public int countMembers() {
-        return members.size();
+        return this.astronauts.size();
     }
 
     public void showMembers() {
-        if (members.isEmpty()) {
+
+        if (this.astronauts.isEmpty()) {
             return;
         }
-        StringBuilder builder = new StringBuilder(name + ": ");
-        for (Astronaut astronaut : members) {
-            builder.append(astronaut.getName()).append(" ");
+
+        StringBuilder members = new StringBuilder();
+        for (Astronaut astronaut : this.astronauts) {
             if (astronaut.getDestination() != null) {
-                builder.append("on mission");
+                members.append(astronaut.getName() + " on mission, ");
             } else {
-                builder.append("on standby.");
+                members.append(astronaut.getName() + " on standby, ");
             }
-            builder.append(", ");
         }
-        builder.setLength(builder.length() - 2);
-        System.out.println(builder);
+
+        System.out.println(this.name + ": " + members.substring(0, members.length() - 2) + '.');
+
     }
+
+    public void doActions(Object mars) {
+        if (mars instanceof planet.Mars) {
+            // cast mars to planet.Mars
+            planet.Mars planetMars = (planet.Mars) mars;
+            for (Astronaut astronaut : this.astronauts) {
+                astronaut.doActions(planetMars);
+            }
+        } else if (mars instanceof chocolate.Mars) {
+            // cast mars to chocolate.Mars
+            chocolate.Mars chocolateMars = (chocolate.Mars) mars;
+            for (Astronaut astronaut : this.astronauts) {
+                astronaut.doActions(chocolateMars);
+            }
+        } else if (mars instanceof planet.moon.Phobos) {
+            // cast mars to planet.moon.Phobos
+            planet.moon.Phobos phobos = (planet.moon.Phobos) mars;
+            for (Astronaut astronaut : this.astronauts) {
+                astronaut.doActions(phobos);
+            }
+        }
+
+        }
+
+    public void doActions() {
+        System.out.println(this.name + ": Nothing to do.");
+    }
+
 }
